@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
 import TodoItem from './TodoItem';
+import Login from './Login';
 
 
 
 function Todo() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
+  const [login,setLogin] = useState(true)
+  const [isTodo,setIsTodo] = useState(false);
 
   const addTodo = () => {
     if (newTodo.trim() !== '') {
@@ -32,32 +35,42 @@ function Todo() {
     setTodos(updatedTodos);
   };
 
+
   return (
     <div className="App">
-      <div>
 
-        <h5>TODO APP</h5>
-        <input
-          type="text"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Agregar nueva tarea"
-        />
-        <button onClick={addTodo}>Agregar</button>
-        <ul>
-          {todos.map((todo, index) => (
-            <TodoItem
-              key={index}
-              todo={todo}
-              index={index}
-              toggleComplete={toggleComplete}
-              deleteTodo={deleteTodo}
-              editTodo={editTodo}
-            />
-          ))}
-        </ul>
+      {
+        login && <Login setLogin={setLogin} setIsTodo={setIsTodo}/>  
+      }
+      
+      {
 
-      </div>
+        isTodo  &&  <div>
+              <h5>TODO APP</h5>
+              <input
+                type="text"
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
+                placeholder="Agregar nueva tarea"
+              />
+              <button onClick={addTodo}>Agregar</button>
+              <ul>
+                {todos.map((todo, index) => (
+                  <TodoItem
+                    key={index}
+                    todo={todo}
+                    index={index}
+                    toggleComplete={toggleComplete}
+                    deleteTodo={deleteTodo}
+                    editTodo={editTodo}
+                  />
+                ))}
+              </ul>
+
+            </div>
+
+
+      }
       
     </div>
   );
