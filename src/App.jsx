@@ -1,5 +1,5 @@
-import  { useState } from 'react';
-import './App.css'; // Archivo CSS para los estilos
+import React, { useState } from 'react';
+import './App.css';
 import TodoItem from './TodoItem';
 
 
@@ -26,17 +26,24 @@ function Todo() {
     setTodos(updatedTodos);
   };
 
+  const editTodo = (index, newText) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index].text = newText;
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="App">
-      <h5>TODO APP </h5>
       <div>
+
+        <h5>TODO APP</h5>
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           placeholder="Agregar nueva tarea"
         />
-        <button style={{left:'1px'}} onClick={addTodo}>Agregar</button>
+        <button onClick={addTodo}>Agregar</button>
         <ul>
           {todos.map((todo, index) => (
             <TodoItem
@@ -45,19 +52,15 @@ function Todo() {
               index={index}
               toggleComplete={toggleComplete}
               deleteTodo={deleteTodo}
+              editTodo={editTodo}
             />
           ))}
         </ul>
+
       </div>
+      
     </div>
   );
 }
 
 export default Todo;
-
-
-
-
-
-
-
